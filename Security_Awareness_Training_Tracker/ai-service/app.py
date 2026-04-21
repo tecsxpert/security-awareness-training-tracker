@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from dotenv import load_dotenv
 import os
 
@@ -21,6 +21,17 @@ def health():
         "status": "UP",
         "service": "AI Service",
         "port": 5000
+    })
+
+# ✅ Day 2: Test prompt route (ADDED ONLY THIS)
+@app.route("/test-prompt", methods=["POST"])
+def test_prompt():
+    data = request.json
+    user_input = data.get("text")
+
+    return jsonify({
+        "input": user_input,
+        "message": "Prompt ready (AI integration next step)"
     })
 
 if __name__ == "__main__":
