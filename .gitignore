@@ -1,0 +1,22 @@
+.env
+.env.*
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+
+.vscode/
+.idea/
+*.iml
+
+.DS_Store
+Thumbs.db
+
+
+
+
