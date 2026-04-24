@@ -7,6 +7,9 @@ from services.groq_client import call_groq
 
 from services.analysis_service import analyze_security_issue
 
+from datetime import datetime
+import json
+
 # load environment variables
 load_dotenv()
 
@@ -41,6 +44,7 @@ def test_prompt():
     })
 
 
+
 @app.route("/describe", methods=["POST"])
 def describe():
     data = request.json
@@ -62,7 +66,8 @@ def describe():
         return jsonify({
             "description": "AI unavailable",
             "risk_level": "Unknown",
-            "explanation": "Fallback response"
+            "explanation": "Fallback response",
+            "generated_at": datetime.utcnow().isoformat()
         })
     
     
@@ -70,6 +75,7 @@ def describe():
     import json
     try:
         parsed = json.loads(ai_response)
+        parsed["generated_at"] = datetime.utcnow().isoformat()
         return jsonify(parsed)
     except:
         return jsonify({
