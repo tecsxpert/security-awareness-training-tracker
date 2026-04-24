@@ -27,6 +27,13 @@ def generate():
 
     prompt = sanitize_input(data["prompt"])
 
+    if not prompt or not prompt.strip():
+        return jsonify({
+
+            "error": "Prompt cannot be empty"
+
+        }), 400
+
     # Detect injection
     if detect_prompt_injection(prompt):
         return jsonify({
