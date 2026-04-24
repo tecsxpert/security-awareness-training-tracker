@@ -61,8 +61,9 @@ def describe():
             "risk_level": "Unknown",
             "explanation": "Fallback response"
         })
+    
+    
 
- 
     import json
     try:
         parsed = json.loads(ai_response)
@@ -71,6 +72,42 @@ def describe():
         return jsonify({
             "raw": ai_response
         })
+
+    # ✅ Day 4: Recommendation endpoint (ADDED ONLY THIS)
+@app.route("/recommend", methods=["POST"])
+def recommend():
+    data = request.json
+
+    if not data or "text" not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    user_input = data["text"]
+
+    # load prompt from file
+    with open("prompts/recommend_prompt.txt", "r") as f:
+        template = f.read()
+
+    final_prompt = template.replace("{input}", user_input)
+
+    ai_response = call_groq(final_prompt)
+
+    if not ai_response:
+        return jsonify([
+            {
+                "action_type": "N/A",
+                "description": "AI unavailable",
+                "priority": "Low"
+            }
+        ])
+
+    import json
+    try:
+        parsed = json.loads(ai_response)
+        return jsonify(parsed)
+    except:
+        return jsonify({
+            "raw": ai_response
+        }) 
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
