@@ -5,10 +5,13 @@ import os
 
 from services.groq_client import call_groq
 
+from services.analysis_service import analyze_security_issue
+
 # load environment variables
 load_dotenv()
 
 app = Flask(__name__)
+
 
 # basic route
 @app.route("/")
@@ -108,6 +111,20 @@ def recommend():
         return jsonify({
             "raw": ai_response
         }) 
+    
+    # ✅ Day 5: Service-based AI integration
+@app.route("/analyze", methods=["POST"])
+def analyze():
+    data = request.json
+
+    if not data or "text" not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    user_input = data["text"]
+
+    result = analyze_security_issue(user_input)
+
+    return jsonify(result)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
