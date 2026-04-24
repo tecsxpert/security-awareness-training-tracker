@@ -17,6 +17,14 @@ env/
 .DS_Store
 Thumbs.db
 
+# Maven
 
+target/
+
+# Java
+
+*.class
+
+*.jar
 
 
