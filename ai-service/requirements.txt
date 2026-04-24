@@ -1,2 +1,5 @@
 groq
 python-dotenv
+flask
+flask-limiter
+bleach
