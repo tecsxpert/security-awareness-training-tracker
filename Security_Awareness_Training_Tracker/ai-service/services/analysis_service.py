@@ -51,3 +51,45 @@ def analyze_security_issue(user_input):
         "explanation": describe_data.get("explanation"),
         "recommendations": recommend_data
     }
+
+def generate_report(user_input):
+    import json
+
+    try:
+        with open("prompts/report_prompt.txt", "r") as f:
+            template = f.read()
+
+        final_prompt = template.replace("{input}", user_input)
+
+        response = call_groq(final_prompt)
+
+        try:
+            data = json.loads(response)
+
+            
+
+            return {
+                "title": data.get("title"),
+                "summary": data.get("summary"),
+                "overview": data.get("overview"),
+                "key_items": data.get("key_items"),
+                "recommendations": data.get("recommendations")
+            }
+
+        except:
+            return {
+                "title": "Report unavailable",
+                "summary": "AI response could not be parsed",
+                "overview": "",
+                "key_items": [],
+                "recommendations": []
+            }
+
+    except Exception:
+        return {
+            "title": "Error",
+            "summary": "Something went wrong",
+            "overview": "",
+            "key_items": [],
+            "recommendations": []
+        }

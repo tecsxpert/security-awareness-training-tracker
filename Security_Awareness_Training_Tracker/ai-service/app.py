@@ -132,5 +132,20 @@ def analyze():
 
     return jsonify(result)
 
+from services.analysis_service import generate_report
+
+@app.route("/generate-report", methods=["POST"])
+def generate_report_route():
+    data = request.json
+
+    if not data or "text" not in data:
+        return jsonify({"error": "Invalid input"}), 400
+
+    user_input = data["text"]
+
+    result = generate_report(user_input)
+
+    return jsonify(result)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
