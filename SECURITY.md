@@ -85,3 +85,27 @@ Prompt injection detection is functioning correctly.
 ## Conclusion
 
 The system is secure against common input-based attacks and behaves as expected.
+
+# Prompt Tuning Report (Day 6)
+
+## Objective
+Improve AI response quality using prompt engineering and evaluation.
+
+## Method
+- Tested 10 real-world inputs
+- Scored responses based on clarity, relevance, and safety
+
+## Results
+- Average Score: X/10
+
+## Observations
+- Responses are concise and relevant
+- Some responses needed improvement for clarity
+
+## Improvements
+- Added structured prompt template
+- Restricted output length
+- Added safety constraints
+
+## Conclusion
+Prompt tuning improved consistency and quality of AI responses.
