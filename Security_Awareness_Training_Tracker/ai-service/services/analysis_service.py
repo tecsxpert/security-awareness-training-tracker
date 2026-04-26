@@ -1,6 +1,6 @@
 import json
 from services.groq_client import call_groq
-
+from services.cache_service import generate_key, get_cache, set_cache
 
 def analyze_security_issue(user_input):
     # default safe values (used if anything fails)
@@ -55,26 +55,35 @@ def analyze_security_issue(user_input):
 def generate_report(user_input):
     import json
 
+    key = generate_key(user_input)
+
+    # 🔹 Check cache
+    cached = get_cache(key)
+    if cached:
+        return cached
+
     try:
         with open("prompts/report_prompt.txt", "r") as f:
             template = f.read()
 
         final_prompt = template.replace("{input}", user_input)
-
         response = call_groq(final_prompt)
 
         try:
             data = json.loads(response)
 
-            
-
-            return {
+            result = {
                 "title": data.get("title"),
                 "summary": data.get("summary"),
                 "overview": data.get("overview"),
                 "key_items": data.get("key_items"),
                 "recommendations": data.get("recommendations")
             }
+
+            # 🔹 Save to cache
+            set_cache(key, result)
+
+            return result
 
         except:
             return {

@@ -10,6 +10,13 @@ from services.analysis_service import analyze_security_issue
 from datetime import datetime
 import json
 
+import time
+
+START_TIME = time.time()
+TOTAL_REQUESTS = 0
+TOTAL_RESPONSE_TIME = 0
+MODEL_NAME = "llama-3.3-70b-versatile"
+
 # load environment variables
 load_dotenv()
 
@@ -26,10 +33,17 @@ def home():
 # health check (important for project)
 @app.route("/health")
 def health():
+    uptime = time.time() - START_TIME
+    avg_response_time = (
+        TOTAL_RESPONSE_TIME / TOTAL_REQUESTS if TOTAL_REQUESTS > 0 else 0
+    )
+
     return jsonify({
         "status": "UP",
-        "service": "AI Service",
-        "port": 5000
+        "model": MODEL_NAME,
+        "uptime_seconds": round(uptime, 2),
+        "total_requests": TOTAL_REQUESTS,
+        "avg_response_time_seconds": round(avg_response_time, 4)
     })
 
 
@@ -47,6 +61,8 @@ def test_prompt():
 
 @app.route("/describe", methods=["POST"])
 def describe():
+    start = time.time()   # ✅ ADD
+
     data = request.json
 
     if not data or "text" not in data:
@@ -54,37 +70,39 @@ def describe():
 
     user_input = data["text"]
 
-    # load prompt from file
     with open("prompts/describe_prompt.txt", "r") as f:
         template = f.read()
 
     final_prompt = template.replace("{input}", user_input)
-
     ai_response = call_groq(final_prompt)
 
     if not ai_response:
         return jsonify({
             "description": "AI unavailable",
             "risk_level": "Unknown",
-            "explanation": "Fallback response",
-            "generated_at": datetime.utcnow().isoformat()
+            "explanation": "Fallback response"
         })
-    
-    
 
     import json
     try:
         parsed = json.loads(ai_response)
-        parsed["generated_at"] = datetime.utcnow().isoformat()
-        return jsonify(parsed)
+        response = jsonify(parsed)   # ✅ CHANGE
     except:
-        return jsonify({
-            "raw": ai_response
-        })
+        response = jsonify({"raw": ai_response})   # ✅ CHANGE
+
+    end = time.time()   # ✅ ADD
+
+    global TOTAL_REQUESTS, TOTAL_RESPONSE_TIME
+    TOTAL_REQUESTS += 1
+    TOTAL_RESPONSE_TIME += (end - start)
+
+    return response   # ✅ FINAL
 
     # ✅ Day 4: Recommendation endpoint (ADDED ONLY THIS)
 @app.route("/recommend", methods=["POST"])
 def recommend():
+    start = time.time()   # ✅ ADD
+
     data = request.json
 
     if not data or "text" not in data:
@@ -92,31 +110,26 @@ def recommend():
 
     user_input = data["text"]
 
-    # load prompt from file
     with open("prompts/recommend_prompt.txt", "r") as f:
         template = f.read()
 
     final_prompt = template.replace("{input}", user_input)
-
     ai_response = call_groq(final_prompt)
-
-    if not ai_response:
-        return jsonify([
-            {
-                "action_type": "N/A",
-                "description": "AI unavailable",
-                "priority": "Low"
-            }
-        ])
 
     import json
     try:
         parsed = json.loads(ai_response)
-        return jsonify(parsed)
+        response = jsonify(parsed)   # ✅ CHANGE
     except:
-        return jsonify({
-            "raw": ai_response
-        }) 
+        response = jsonify({"raw": ai_response})   # ✅ CHANGE
+
+    end = time.time()   # ✅ ADD
+
+    global TOTAL_REQUESTS, TOTAL_RESPONSE_TIME
+    TOTAL_REQUESTS += 1
+    TOTAL_RESPONSE_TIME += (end - start)
+
+    return response
     
     # ✅ Day 5: Service-based AI integration
 @app.route("/analyze", methods=["POST"])
@@ -134,8 +147,11 @@ def analyze():
 
 from services.analysis_service import generate_report
 
+
 @app.route("/generate-report", methods=["POST"])
 def generate_report_route():
+    start = time.time()   # ✅ 1. FIRST LINE inside function
+
     data = request.json
 
     if not data or "text" not in data:
@@ -145,7 +161,15 @@ def generate_report_route():
 
     result = generate_report(user_input)
 
-    return jsonify(result)
+    response = jsonify(result)   # ✅ 2. BEFORE returning
+
+    end = time.time()   # ✅ 3. AFTER processing
+
+    global TOTAL_REQUESTS, TOTAL_RESPONSE_TIME
+    TOTAL_REQUESTS += 1
+    TOTAL_RESPONSE_TIME += (end - start)
+
+    return response   # ✅ FINAL return
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
