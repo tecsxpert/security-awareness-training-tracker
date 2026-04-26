@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ai")
-@CrossOrigin(origins = "*") // optional but useful
+@CrossOrigin(origins = "http://localhost:5173") 
 public class AiController {
 
     private final AiServiceClient aiServiceClient;
@@ -26,6 +26,11 @@ public class AiController {
         if (prompt == null || prompt.trim().isEmpty()) {
             return ResponseEntity.badRequest()
                     .body(Map.of("error", "Prompt is required"));
+        }
+
+        if (prompt.length() > 500) {
+            return ResponseEntity.badRequest()
+                .body(Map.of("error", "Prompt too long"));
         }
 
         // Call AI service

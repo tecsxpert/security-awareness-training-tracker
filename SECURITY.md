@@ -109,3 +109,35 @@ Improve AI response quality using prompt engineering and evaluation.
 
 ## Conclusion
 Prompt tuning improved consistency and quality of AI responses.
+
+## OWASP ZAP Scan Report (Day 7)
+
+### Medium Severity Issues
+
+#### 1. Content Security Policy (CSP)
+- Issue: Missing/weak CSP configuration
+- Fix: Added strict CSP headers in backend
+
+---
+
+### Informational Findings
+
+1. Potential XSS
+- No exploitable vulnerability found
+- Input sanitization already implemented
+
+2. Information Disclosure in URL
+- No sensitive data exposed
+- API uses POST requests
+
+3. Authentication Request Identified
+- Authentication not implemented (planned feature)
+
+4. User Agent Fuzzer
+- Expected behavior from ZAP testing
+
+---
+
+### Conclusion
+
+No critical vulnerabilities were found. Medium-level issue (CSP) was fixed. Informational findings do not pose immediate risk and are acceptable for the current system scope.

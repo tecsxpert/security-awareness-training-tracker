@@ -50,6 +50,6 @@ public class AiServiceClient {
             System.out.println("AI Service Error: " + e.getMessage());
         }
 
-        return null; // as per task requirement
+        return null; 
     }
 }
