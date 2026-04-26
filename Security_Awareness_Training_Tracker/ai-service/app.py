@@ -11,6 +11,15 @@ from datetime import datetime
 import json
 
 import time
+import werkzeug.serving
+
+werkzeug.serving.WSGIRequestHandler.server_version = "SecureServer"
+werkzeug.serving.WSGIRequestHandler.sys_version = ""
+from werkzeug.serving import WSGIRequestHandler
+
+class CustomHandler(WSGIRequestHandler):
+    def version_string(self):
+        return ""
 
 START_TIME = time.time()
 TOTAL_REQUESTS = 0
@@ -171,5 +180,36 @@ def generate_report_route():
 
     return response   # ✅ FINAL return
 
+@app.after_request
+def add_security_headers(response):
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    response.headers["Content-Security-Policy"] = (
+    "default-src 'self'; "
+    "script-src 'self'; "
+    "style-src 'self'; "
+    "img-src 'self'; "
+    "object-src 'none'; "
+    "base-uri 'self'; "
+    "frame-ancestors 'none'; "
+    "form-action 'self';"
+)
+    response.headers["Referrer-Policy"] = "no-referrer"
+    response.headers["Permissions-Policy"] = "geolocation=(), microphone=()"
+    response.headers.pop("Server", None)
+
+    return response
+
+@app.errorhandler(404)
+def not_found(e):
+    response = jsonify({
+        "error": "Not Found",
+        "message": "The requested resource was not found"
+    })
+    response.status_code = 404
+    return response
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False, request_handler=CustomHandler)
