@@ -48,7 +48,7 @@ def generate():
 
     return jsonify({
         "response": result["response"],
-        "model": result["model"]
+        "model": result.get("model", "unknown")
     })
 
 
