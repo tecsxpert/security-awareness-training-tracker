@@ -54,7 +54,9 @@ def analyze_security_issue(user_input):
 
 def generate_report(user_input):
     import json
+    import re
 
+    
     key = generate_key(user_input)
 
     # 🔹 Check cache
@@ -67,38 +69,49 @@ def generate_report(user_input):
             template = f.read()
 
         final_prompt = template.replace("{input}", user_input)
+
+        
         response = call_groq(final_prompt)
 
-        try:
-            data = json.loads(response)
-
-            result = {
-                "title": data.get("title"),
-                "summary": data.get("summary"),
-                "overview": data.get("overview"),
-                "key_items": data.get("key_items"),
-                "recommendations": data.get("recommendations")
-            }
-
-            # 🔹 Save to cache
-            set_cache(key, result)
-
-            return result
-
-        except:
+        if not response:
+            print(" Groq returned None")
             return {
-                "title": "Report unavailable",
-                "summary": "AI response could not be parsed",
+                "title": "Error",
+                "summary": "AI not responding (check API key)",
                 "overview": "",
                 "key_items": [],
                 "recommendations": []
             }
 
-    except Exception:
+        
+        # 🔹 Extract JSON safely
+        json_match = re.search(r'\{.*\}', response, re.DOTALL)
+
+        if not json_match:
+            raise ValueError("No JSON found")
+
+        data = json.loads(json_match.group())
+
+        result = {
+        "title": data.get("title", "Security Report"),
+        "summary": data.get("summary", ""),
+        "overview": data.get("overview", ""),
+        "key_items": data.get("key_items", []),
+        "recommendations": data.get("recommendations", []),
+        "is_fallback": False   
+    }
+
+        set_cache(key, result)
+
+        return result
+
+    except Exception as e:
+        print(" ERROR:", str(e))
         return {
-            "title": "Error",
-            "summary": "Something went wrong",
-            "overview": "",
-            "key_items": [],
-            "recommendations": []
-        }
+        "title": "Report unavailable",
+        "summary": "AI service failed, using fallback response",
+        "overview": "",
+        "key_items": [],
+        "recommendations": [],
+        "is_fallback": True   
+    }
