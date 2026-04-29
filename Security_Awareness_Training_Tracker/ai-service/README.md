@@ -1,0 +1,152 @@
+# AI Security Awareness Service
+
+##  Overview
+
+This service analyzes user-reported security incidents and generates
+structured AI-powered reports.
+
+It uses: - Groq API (LLM) - Flask backend - Fallback handling for
+invalid/failed responses
+
+------------------------------------------------------------------------
+
+##  Setup Instructions
+
+### 1. Clone the repository
+
+``` bash
+git clone <your-repo-url>
+cd Security_Awareness_Training_Tracker/ai-service
+```
+
+### 2. Create virtual environment
+
+``` bash
+python -m venv venv
+venv\Scripts\activate   # Windows
+```
+
+### 3. Install dependencies
+
+``` bash
+pip install -r requirements.txt
+```
+
+### 4. Set Environment Variables
+
+Create a `.env` file:
+
+    GROQ_API_KEY=your_api_key_here
+
+    Never commit this file to GitHub.
+
+### 5. Run the service
+
+``` bash
+python app.py
+```
+
+Server runs on: http://127.0.0.1:5000
+
+------------------------------------------------------------------------
+
+## API Endpoints
+
+### Health Check
+
+GET `/health`
+
+Response:
+
+``` json
+{
+  "status": "healthy"
+}
+```
+
+------------------------------------------------------------------------
+
+### Analyze Security Issue
+
+POST `/analyze`
+
+Request:
+
+``` json
+{
+  "text": "User received a suspicious email and clicked the link"
+}
+```
+
+Response:
+
+``` json
+{
+  "description": "Phishing attempt",
+  "risk_level": "High",
+  "explanation": "User interacted with a malicious link",
+  "recommendations": [
+    "Change passwords",
+    "Run antivirus scan"
+  ]
+}
+```
+
+------------------------------------------------------------------------
+
+### Generate Report 
+
+POST `/generate-report`
+
+Request:
+
+``` json
+{
+  "text": "User clicked suspicious email link"
+}
+```
+
+Success Response:
+
+``` json
+{
+  "is_fallback": false,
+  "title": "Phishing Incident",
+  "summary": "User clicked suspicious link",
+  "overview": "Detailed explanation...",
+  "key_items": [
+    "Suspicious link clicked",
+    "Possible malware"
+  ],
+  "recommendations": [
+    "Change password",
+    "Scan system"
+  ]
+}
+```
+
+Fallback Response:
+
+``` json
+{
+  "is_fallback": true,
+  "title": "Invalid Input",
+  "summary": "Input is too weak or not meaningful",
+  "overview": "",
+  "key_items": [],
+  "recommendations": []
+}
+```
+
+------------------------------------------------------------------------
+
+## Features
+
+-   AI-powered analysis (Groq)
+-   Structured JSON output
+-   Fallback system (`is_fallback`)
+-   Input validation
+-   Error handling
+-   Caching support (Redis optional)
+
+------------------------------------------------------------------------
