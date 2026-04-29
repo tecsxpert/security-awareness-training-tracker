@@ -141,3 +141,44 @@ Prompt tuning improved consistency and quality of AI responses.
 ### Conclusion
 
 No critical vulnerabilities were found. Medium-level issue (CSP) was fixed. Informational findings do not pose immediate risk and are acceptable for the current system scope.
+
+## Week 2 Security Sign-Off (Day 9)
+
+### 1. JWT Authentication
+- Implemented token-based authentication
+- Protected AI endpoints using JWT
+
+### 2. Rate Limiting
+- Verified 30 requests/min limit using Flask-Limiter
+
+### 3. Injection Protection
+- Input sanitization and prompt injection detection verified
+
+### 4. PII Audit
+- Implemented detection for emails, phone numbers, and sensitive IDs
+- Requests containing PII are blocked
+
+### Conclusion
+All security controls have been verified and implemented successfully. The system meets Week 2 security requirements.
+
+## AI Quality Review (Day 10)
+
+### Objective
+Evaluate and improve AI response quality.
+
+### Method
+- Tested 10 fresh inputs
+- Scored responses out of 5
+- Target: Average ≥ 4/5
+
+### Final Results
+- Initial Average: 4.0/5
+- Final Average: 4.2/5
+
+### Improvements:
+- Added structured prompt template
+- Enforced actionable responses
+- Improved clarity and relevance
+
+### Conclusion
+AI responses meet quality standards with consistent, safe, and useful outputs.
