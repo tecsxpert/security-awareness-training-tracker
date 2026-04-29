@@ -74,10 +74,10 @@ def generate_report(user_input):
         response = call_groq(final_prompt)
 
         if not response:
-            print(" Groq returned None")
             return {
-                "title": "Error",
-                "summary": "AI not responding (check API key)",
+                "is_fallback": True,
+                "title": "AI Unavailable",
+                "summary": "Failed to fetch AI response",
                 "overview": "",
                 "key_items": [],
                 "recommendations": []

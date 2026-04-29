@@ -172,7 +172,7 @@ def generate_report_route():
     text = data.get("text", "").strip()
 
     
-    if not text or len(text.split()) < 3:
+    if not text or len(text.strip()) < 10 or text.isalpha() and len(text.split()) <= 2:
         return jsonify({
             "is_fallback": True,
             "title": "Invalid Input",
@@ -224,6 +224,17 @@ def not_found(e):
     })
     response.status_code = 404
     return response
+
+@app.route("/metrics", methods=["GET"])
+def metrics():
+    avg = 0
+    if TOTAL_REQUESTS > 0:
+        avg = TOTAL_RESPONSE_TIME / TOTAL_REQUESTS
+
+    return jsonify({
+        "total_requests": TOTAL_REQUESTS,
+        "average_response_time": avg
+    })
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False, request_handler=CustomHandler)
