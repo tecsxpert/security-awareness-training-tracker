@@ -25,3 +25,17 @@ def detect_prompt_injection(text: str) -> bool:
             return True
 
     return False
+
+# PII Detection
+def contains_pii(text: str) -> bool:
+    patterns = [
+        r"\b\d{10}\b",        # phone number
+        r"\b\d{12}\b",        # aadhaar-like
+        r"\S+@\S+\.\S+"       # email
+    ]
+
+    for pattern in patterns:
+        if re.search(pattern, text):
+            return True
+
+    return False
