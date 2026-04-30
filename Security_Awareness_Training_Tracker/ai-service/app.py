@@ -11,6 +11,13 @@ from services.analysis_service import analyze_security_issue
 from datetime import datetime
 import json
 
+from services.embedding_service import load_model
+
+load_model()  
+
+from services.embedding_service import get_embedding
+
+
 import time
 import werkzeug.serving
 
@@ -77,6 +84,8 @@ def describe():
 
     if not data or "text" not in data:
         return jsonify({"error": "Invalid input"}), 400
+
+    
 
     user_input = data["text"]
 
@@ -192,6 +201,8 @@ def generate_report_route():
     TOTAL_REQUESTS += 1
     TOTAL_RESPONSE_TIME += (end - start)
 
+    print("🔥 NEW CODE RUNNING")
+    print(request.json)
     return response 
 
 @app.after_request
@@ -235,6 +246,14 @@ def metrics():
         "total_requests": TOTAL_REQUESTS,
         "average_response_time": avg
     })
+
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
+    return response
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False, request_handler=CustomHandler)

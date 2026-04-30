@@ -1,8 +1,11 @@
 import json
 from services.groq_client import call_groq
 from services.cache_service import generate_key, get_cache, set_cache
+from services.embedding_service import get_embedding
+
 
 def analyze_security_issue(user_input):
+    embedding = get_embedding(user_input)
     # default safe values (used if anything fails)
     describe_data = {
         "description": "AI unavailable",
@@ -10,6 +13,7 @@ def analyze_security_issue(user_input):
         "explanation": "Fallback response"
     }
     recommend_data = []
+
 
     try:
         # -------- DESCRIBE --------
