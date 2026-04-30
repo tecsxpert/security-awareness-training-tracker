@@ -3,7 +3,6 @@ package com.internship.tool.service;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.ResourceAccessException;
 
 import java.util.Map;
 
@@ -12,44 +11,44 @@ public class AiServiceClient {
 
     private final RestTemplate restTemplate;
 
-    private static final String AI_URL = "http://localhost:5000/ai/generate";
-
     public AiServiceClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
     public String generateResponse(String prompt) {
         try {
-            // Request body
+            String url = System.getenv().getOrDefault(
+                    "AI_SERVICE_URL",
+                    "http://ai-service:5000"
+            ) + "/ai/generate";
+
+            System.out.println("👉 Calling AI at: " + url);
+
             Map<String, String> body = Map.of("prompt", prompt);
 
-            // Headers
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
             HttpEntity<Map<String, String>> request =
                     new HttpEntity<>(body, headers);
 
-            // API call
-            ResponseEntity<Map> response = restTemplate.exchange(
-                    AI_URL,
+            // 🔥 KEY CHANGE: use String instead of Map
+            ResponseEntity<String> response = restTemplate.exchange(
+                    url,
                     HttpMethod.POST,
                     request,
-                    Map.class
+                    String.class
             );
 
-            if (response.getStatusCode().is2xxSuccessful()
-                    && response.getBody() != null) {
+            System.out.println("AI Raw Response: " + response.getBody());
 
-                return (String) response.getBody().get("response");
-            }
+            return response.getBody();  // return full JSON
 
-        } catch (ResourceAccessException e) {
-            System.out.println("⏱ Timeout / Connection error: " + e.getMessage());
         } catch (Exception e) {
-            System.out.println("AI Service Error: " + e.getMessage());
+            System.out.println("AI ERROR:");
+            e.printStackTrace();
         }
 
-        return null; 
+        return null;
     }
 }

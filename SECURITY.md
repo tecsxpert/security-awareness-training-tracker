@@ -182,3 +182,22 @@ Evaluate and improve AI response quality.
 
 ### Conclusion
 AI responses meet quality standards with consistent, safe, and useful outputs.
+
+## Day 11 - E2E Docker Test
+
+### Setup
+- Docker Compose used to run all services
+
+### Services
+- Spring Boot (Backend)
+- Flask AI Service
+- PostgreSQL
+- Redis
+
+### Verification
+- All services started successfully
+- API calls passed from backend → AI service
+- AI responses returned correctly
+
+### Conclusion
+Full end-to-end system works correctly in containerized environment.

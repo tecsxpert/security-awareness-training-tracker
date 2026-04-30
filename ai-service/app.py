@@ -32,19 +32,22 @@ client = GroqClient()
 def login():
     data = request.get_json()
 
+    if not data:
+        return jsonify({"error": "Invalid JSON"}), 400
+
     username = data.get("username")
     password = data.get("password")
 
     if username == "admin" and password == "admin":
         token = create_access_token(identity=username)
-        return jsonify(access_token=token)
+        return jsonify({"access_token": token}), 200
 
     return jsonify({"error": "Invalid credentials"}), 401
 
 
 # PROTECTED AI ENDPOINT
 @app.route("/ai/generate", methods=["POST"])
-@jwt_required()
+
 @limiter.limit("30 per minute")
 def generate():
     data = request.get_json()
@@ -82,4 +85,4 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ai")
-@CrossOrigin(origins = "http://localhost:5173") 
+@CrossOrigin(origins = "http://localhost:5173")
 public class AiController {
 
     private final AiServiceClient aiServiceClient;
@@ -22,7 +22,6 @@ public class AiController {
 
         String prompt = request.get("prompt");
 
-        // Input validation
         if (prompt == null || prompt.trim().isEmpty()) {
             return ResponseEntity.badRequest()
                     .body(Map.of("error", "Prompt is required"));
@@ -30,21 +29,17 @@ public class AiController {
 
         if (prompt.length() > 500) {
             return ResponseEntity.badRequest()
-                .body(Map.of("error", "Prompt too long"));
+                    .body(Map.of("error", "Prompt too long"));
         }
 
-        // Call AI service
         String response = aiServiceClient.generateResponse(prompt);
 
-        // Handle failure
         if (response == null) {
             return ResponseEntity.status(500)
                     .body(Map.of("error", "AI service unavailable"));
         }
 
-        // Success
-        return ResponseEntity.ok(Map.of(
-                "response", response
-        ));
+        // return raw JSON string from Flask
+        return ResponseEntity.ok(response);
     }
 }
