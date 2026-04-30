@@ -1,0 +1,2 @@
+Phishing attacks trick users into clicking malicious links or sharing sensitive information. 
+Always verify sender identity and avoid clicking unknown links.

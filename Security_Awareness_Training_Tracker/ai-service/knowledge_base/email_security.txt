@@ -1,0 +1,2 @@
+Avoid opening suspicious attachments or clicking unknown email links. 
+Check email authenticity carefully.
