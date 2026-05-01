@@ -93,6 +93,3 @@ docker-compose up --build
 - Microservices architecture
 - Real-world cybersecurity use case
 - Production-style deployment
-
-
-
