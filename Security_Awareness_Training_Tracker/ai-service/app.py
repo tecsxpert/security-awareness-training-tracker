@@ -48,8 +48,9 @@ def home():
     })
 
 # health check (important for project)
-@app.route("/health")
+@app.route("/health",methods=["GET"])
 def health():
+    return{"status":"ok"}
     uptime = time.time() - START_TIME
     avg_response_time = (
         TOTAL_RESPONSE_TIME / TOTAL_REQUESTS if TOTAL_REQUESTS > 0 else 0
