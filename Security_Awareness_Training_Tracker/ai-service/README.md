@@ -218,3 +218,19 @@ Note: AI endpoints take longer due to model inference.
 - Environment variables secured
 - Project ready for submission
 
+## Day-16 Validation
+
+### Performance
+- Initial AI response: ~10–20 seconds
+- Cached responses: ~1–2 seconds
+
+### Cache
+- Redis cache tested
+- Repeated requests return faster responses
+
+### Fallback
+- System returns fallback response when AI is unavailable
+- Ensures reliability and no crashes
+
+### Status
+- All endpoints verified and within acceptable performance limits
