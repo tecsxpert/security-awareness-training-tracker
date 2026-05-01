@@ -38,6 +38,11 @@ public class AiController {
             return ResponseEntity.status(500)
                     .body(Map.of("error", "AI service unavailable"));
         }
+        
+        // Detect error JSON from Flask
+        if (response.contains("\"error\"")) {
+            return ResponseEntity.badRequest().body(response);
+        }
 
         // return raw JSON string from Flask
         return ResponseEntity.ok(response);
