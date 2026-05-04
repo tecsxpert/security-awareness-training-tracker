@@ -1,0 +1,432 @@
+[
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Phishing link clicked",
+      "Potential malware installation",
+      "Possible data breach"
+    ],
+    "overview": "The user clicked on a phishing link, potentially compromising their account credentials and system security. This action may have led to the installation of malware, unauthorized data access, or further malicious activities.",
+    "recommendations": [
+      "Change passwords immediately",
+      "Run a full system scan for malware",
+      "Monitor account activity for suspicious behavior"
+    ],
+    "summary": "User interacted with a malicious link",
+    "title": "Phishing Link Clicked"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Potential malware infection",
+      "Possible data breach"
+    ],
+    "overview": "The user interacted with an email that has not been verified as safe, potentially exposing the system to malware, phishing, or other cyber threats. This action may have compromised the security of the user's account, device, or the entire network.",
+    "recommendations": [
+      "Run a full system virus scan",
+      "Change passwords and enable two-factor authentication"
+    ],
+    "summary": "User opened a potentially malicious email",
+    "title": "Suspicious Email Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Unknown file source",
+      "Potential malware introduction"
+    ],
+    "overview": "The user has downloaded a file from an unknown or untrusted source, potentially introducing malware into the system. This action poses a significant risk to the security and integrity of the system, as the file may contain viruses, Trojans, or other types of malicious software. The file may be designed to steal sensitive information, disrupt system operations, or provide unauthorized access to the system.",
+    "recommendations": [
+      "Immediately scan the system for malware",
+      "Isolate the system from the network and restrict user access"
+    ],
+    "summary": "User downloaded unknown file from untrusted source",
+    "title": "Malicious File Download"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Compromised password",
+      "Potential data breach"
+    ],
+    "overview": "A user has intentionally or unintentionally shared their login credentials, potentially compromising the security of the system or network. This could lead to unauthorized access, data breaches, or other malicious activities. The shared password may have been transmitted through insecure channels, such as email or instant messaging, or may have been written down and left in an insecure location.",
+    "recommendations": [
+      "Immediately change the shared password",
+      "Conduct a thorough security audit to assess potential damage"
+    ],
+    "summary": "User shared sensitive password information",
+    "title": "Password Sharing Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Weak password reuse",
+      "Potential for unauthorized access"
+    ],
+    "overview": "The user reused a weak password across multiple accounts, increasing the risk of unauthorized access and data breaches. This incident highlights the importance of password management and the need for unique, complex passwords for each account.",
+    "recommendations": [
+      "Implement a password manager to generate and store unique complex passwords",
+      "Enable multi-factor authentication to add an extra layer of security"
+    ],
+    "summary": "User reused a weak password, potentially compromising account security",
+    "title": "Password Reuse Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Browser warning ignored",
+      "Potential malware exposure"
+    ],
+    "overview": "The user intentionally ignored a browser warning, potentially exposing their system to malware or other security threats. This action may have been taken due to a lack of understanding of the warning or a false sense of security. As a result, the user's device and data may be at risk of compromise.",
+    "recommendations": [
+      "Implement user education on browser warnings",
+      "Run a full system scan for malware"
+    ],
+    "summary": "User bypassed browser security warning",
+    "title": "Browser Warning Ignored"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Unknown software source",
+      "Potential malware infection",
+      "System vulnerability"
+    ],
+    "overview": "The user has installed software from an unknown source, which poses a significant risk to the security of the device and the organization's network. This software may contain malware, such as viruses, trojans, or spyware, that can compromise sensitive data and disrupt system operations. The software may also have vulnerabilities that can be exploited by attackers to gain unauthorized access to the device or network.",
+    "recommendations": [
+      "Remove the unknown software immediately",
+      "Run a full virus scan on the device",
+      "Apply all available security updates and patches"
+    ],
+    "summary": "User installed unknown software on their device",
+    "title": "Unauthorized Software Installation"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Malware risk",
+      "Potential data breach"
+    ],
+    "overview": "The user visited a website that has been flagged as unsafe, potentially exposing the system to malware or other cyber threats. This incident may have compromised the security of the user's device or the organization's network.",
+    "recommendations": [
+      "Run a full system scan",
+      "Update antivirus software and browser plugins"
+    ],
+    "summary": "User accessed a potentially malicious website",
+    "title": "Unsafe Website Access"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Credential compromise",
+      "Potential lateral movement"
+    ],
+    "overview": "The user entered their login credentials on a fake website, potentially exposing sensitive information to malicious actors. This could lead to unauthorized access to the user's account and potentially other connected systems or services.",
+    "recommendations": [
+      "Immediately change compromised credentials",
+      "Monitor account activity for suspicious behavior"
+    ],
+    "summary": "User compromised credentials on fake site",
+    "title": "Phishing Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Malicious email attachment",
+      "Potential malware installation"
+    ],
+    "overview": "A user clicked on a malicious attachment, potentially compromising the security of the system. This action may have led to the installation of malware, allowing unauthorized access to sensitive data or disruption of system operations. Immediate action is necessary to contain and mitigate the damage.",
+    "recommendations": [
+      "Run a full system virus scan",
+      "Change all user passwords and enable two-factor authentication"
+    ],
+    "summary": "User interacted with malicious email attachment",
+    "title": "Malicious Attachment Clicked"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Sensitive information exposed",
+      "Potential for identity theft"
+    ],
+    "overview": "A user's personal data was inadvertently exposed, potentially due to a lack of encryption, weak passwords, or phishing attacks, which can lead to identity theft, financial loss, and reputational damage. The incident may have occurred through various means such as email, social media, or unsecured websites.",
+    "recommendations": [
+      "Implement encryption and access controls",
+      "Conduct user awareness training on data protection best practices"
+    ],
+    "summary": "User's personal data was exposed",
+    "title": "Data Exposure Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Outdated software",
+      "Potential vulnerability exploitation"
+    ],
+    "overview": "The user's failure to update software has created a security risk, as outdated software may contain known vulnerabilities that can be exploited by attackers. This oversight can lead to unauthorized access, data breaches, or other malicious activities. Regular software updates are essential to patch security flaws, fix bugs, and improve overall system performance.",
+    "recommendations": [
+      "Immediately update software to latest version",
+      "Implement regular update schedule to prevent future oversights"
+    ],
+    "summary": "User neglected to update software, potentially exposing system to vulnerabilities",
+    "title": "Software Update Failure"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Lack of encryption",
+      "Exposure to malicious networks"
+    ],
+    "overview": "The user connected to a public WiFi network without utilizing a Virtual Private Network (VPN), potentially exposing their device and data to various security risks, including man-in-the-middle attacks, eavesdropping, and malware infections.",
+    "recommendations": [
+      "Use a reputable VPN when accessing public WiFi",
+      "Avoid accessing sensitive information on unsecured networks"
+    ],
+    "summary": "User accessed public WiFi without VPN",
+    "title": "Unsecured Public WiFi Use"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Sensitive information potentially compromised",
+      "Malicious email contents"
+    ],
+    "overview": "The user received a scam email and responded to it, potentially compromising sensitive information. The email likely contained malicious links or attachments designed to trick the user into divulging confidential data. This incident highlights the need for enhanced user awareness and training on identifying and reporting suspicious emails.",
+    "recommendations": [
+      "Conduct immediate password reset",
+      "Monitor account activity for suspicious behavior"
+    ],
+    "summary": "User fell victim to scam email",
+    "title": "Phishing Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Malware risk",
+      "Unauthorized software"
+    ],
+    "overview": "The user has downloaded cracked software, which may contain embedded malware or viruses, posing a significant risk to the security and integrity of the system. This action can lead to unauthorized access, data breaches, or disruption of services. The downloaded software may also be outdated, lacking essential security patches, and could be used as an entry point for further malicious activities.",
+    "recommendations": [
+      "Immediately remove the downloaded software",
+      "Conduct a full system scan for malware and viruses"
+    ],
+    "summary": "User downloaded cracked software, potentially introducing malware",
+    "title": "Malicious Software Download"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Antivirus alert ignored",
+      "Potential malware exposure"
+    ],
+    "overview": "A user intentionally ignored an alert from the antivirus software, potentially exposing the system to malware or other security threats. This action may have been due to a lack of understanding of the alert's significance or a false sense of security. As a result, the system may be vulnerable to various types of attacks, including viruses, Trojans, or spyware, which could lead to data breaches, system crashes, or other severe consequences.",
+    "recommendations": [
+      "Immediately scan the system with antivirus software",
+      "Educate the user on antivirus alert importance and response procedures"
+    ],
+    "summary": "User disregarded antivirus warning",
+    "title": "Antivirus Alert Ignored"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Potential malware infection",
+      "Phishing attack risk"
+    ],
+    "overview": "The user opened a spam message, potentially exposing their system to malware or phishing attacks. This action may have compromised sensitive information or installed malicious software, highlighting the need for improved email security and user awareness.",
+    "recommendations": [
+      "Run a full system virus scan",
+      "Provide user with phishing awareness training"
+    ],
+    "summary": "User interacted with suspicious email",
+    "title": "Spam Message Opened"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Sensitive information exposed",
+      "Potential data breach"
+    ],
+    "overview": "A user has shared confidential information, potentially compromising company security and data privacy. This incident may have occurred due to lack of training, phishing, or misuse of company resources. Immediate action is required to mitigate potential damage and prevent further leaks.",
+    "recommendations": [
+      "Conduct incident response and damage assessment",
+      "Provide user training on data handling and security best practices"
+    ],
+    "summary": "User shared sensitive information",
+    "title": "Confidential Info Leak"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Unknown device origin",
+      "Potential malware introduction",
+      "Unsanctioned data transfer"
+    ],
+    "overview": "An unknown USB device was connected to a company system by a user, potentially introducing malware or unauthorized data transfer. This incident poses a significant risk to the security and integrity of the company's network and data. The device's origin, purpose, and contents are unknown, making it a potential vector for malicious activity.",
+    "recommendations": [
+      "Isolate the affected system",
+      "Scan the system for malware",
+      "Interview the user to determine the device's origin and purpose"
+    ],
+    "summary": "User connected an unknown USB device to a company system",
+    "title": "Unauthorized USB Connection"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "User identification",
+      "Warning details"
+    ],
+    "overview": "A user has intentionally bypassed a security warning, which may indicate a lack of awareness about potential security threats or a deliberate attempt to circumvent security measures. This action could lead to malware infections, data breaches, or other security incidents. The user's actions should be investigated to determine the motivations behind the bypass and to assess the potential impact on the system.",
+    "recommendations": [
+      "Conduct user awareness training",
+      "Review and strengthen security policies"
+    ],
+    "summary": "User bypassed security warning, potentially exposing system to risk",
+    "title": "Security Warning Bypass"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Unverified extension source",
+      "Potential malware installation"
+    ],
+    "overview": "The user has installed a browser extension from an unverified source, which may pose a significant risk to the security and integrity of their system and data. This extension could be used to steal sensitive information, track user activity, or install additional malware.",
+    "recommendations": [
+      "Remove the suspicious extension immediately",
+      "Run a full system virus scan to detect and remove any potential malware"
+    ],
+    "summary": "User installed a potentially malicious browser extension",
+    "title": "Suspicious Extension Installation"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "User clicked on a suspicious link",
+      "Potential credentials compromise"
+    ],
+    "overview": "The user clicked on a fake login page, potentially exposing their login credentials to an attacker. This could lead to unauthorized access to the user's account and sensitive information. The fake login page may have been delivered via a phishing email or malicious link.",
+    "recommendations": [
+      "Change passwords immediately",
+      "Enable two-factor authentication"
+    ],
+    "summary": "User interacted with a fake login page",
+    "title": "Phishing Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Phishing attack",
+      "Unauthorized website access",
+      "Compromised OTP"
+    ],
+    "overview": "The user entered a one-time password (OTP) on a website that was not recognized or authorized, potentially leading to account takeover or financial loss. This incident may have occurred due to a phishing attack, where the user was tricked into revealing sensitive information.",
+    "recommendations": [
+      "Change passwords immediately",
+      "Monitor account activity",
+      "Enable two-factor authentication"
+    ],
+    "summary": "User compromised OTP on unknown site",
+    "title": "OTP Phishing Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Phishing warning bypassed",
+      "Potential malware exposure"
+    ],
+    "overview": "A user intentionally ignored a phishing warning, potentially exposing the system to malicious activity. This incident highlights the need for improved user awareness and training on phishing attacks, as well as the implementation of more robust security measures to prevent similar incidents in the future.",
+    "recommendations": [
+      "Mandatory phishing awareness training",
+      "Implementation of stricter email filtering policies"
+    ],
+    "summary": "User bypassed phishing warning",
+    "title": "Phishing Warning Ignored"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Potential malware infection",
+      "Data breach risk"
+    ],
+    "overview": "The user downloaded an email attachment, which may contain malware or viruses, potentially compromising the security of the system and putting sensitive data at risk. This action may have been the result of a phishing attack or social engineering tactic, and the attachment may be designed to exploit vulnerabilities in the system or software.",
+    "recommendations": [
+      "Run a full system virus scan",
+      "Implement email attachment scanning and filtering"
+    ],
+    "summary": "User downloaded a potentially malicious email attachment",
+    "title": "Email Attachment Download"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Unauthorized access",
+      "Potential data breach"
+    ],
+    "overview": "A user has shared their login credentials with an unauthorized party, potentially compromising the security of the system and sensitive data. This incident may lead to unauthorized access, data breaches, or lateral movement within the network. Immediate action is required to mitigate the risks and prevent further damage.",
+    "recommendations": [
+      "Reset shared credentials",
+      "Conduct incident response and monitoring"
+    ],
+    "summary": "User shared sensitive credentials",
+    "title": "Credential Sharing Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Unknown link source",
+      "Potential malware infection"
+    ],
+    "overview": "The user opened an unknown link, which may have led to a potential phishing incident, possibly resulting in malware infection, data breach, or unauthorized access to sensitive information. This action may have compromised the security of the user's device and the organization's network.",
+    "recommendations": [
+      "Run a full system scan",
+      "Change passwords and enable MFA"
+    ],
+    "summary": "User interacted with unknown link",
+    "title": "Potential Phishing Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Weak password usage",
+      "Lack of password policy enforcement"
+    ],
+    "overview": "The user's account was accessed unauthorizedly because of a weak password, which is a significant security risk. This could lead to data breaches, identity theft, and other malicious activities. Strong passwords are essential to prevent such incidents.",
+    "recommendations": [
+      "Enforce strong password policy",
+      "Implement multi-factor authentication"
+    ],
+    "summary": "User account compromised due to weak password",
+    "title": "Weak Password Incident"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Malicious site accessed",
+      "Potential malware infection",
+      "Sensitive data exposure"
+    ],
+    "overview": "The user accessed a website that has been identified as malicious, potentially exposing their device and sensitive information to various cyber threats, including malware, phishing, and data breaches. This incident may have occurred due to a phishing email, suspicious link, or outdated security software.",
+    "recommendations": [
+      "Run a full system virus scan",
+      "Change passwords and enable two-factor authentication",
+      "Update security software and operating system"
+    ],
+    "summary": "User visited a malicious website",
+    "title": "Malicious Site Access"
+  },
+  {
+    "is_fallback": false,
+    "key_items": [
+      "Lack of email verification",
+      "Insufficient security awareness"
+    ],
+    "overview": "The user received a message from an unknown sender and chose to trust it, potentially exposing sensitive information or allowing malicious activity on their device. This action may have led to the installation of malware, unauthorized access to personal data, or other security breaches.",
+    "recommendations": [
+      "Implement email verification protocols",
+      "Conduct user security awareness training"
+    ],
+    "summary": "User interacted with unknown sender",
+    "title": "Phishing Incident"
+  }
+]

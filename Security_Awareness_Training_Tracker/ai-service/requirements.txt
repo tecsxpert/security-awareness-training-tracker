@@ -1,4 +1,6 @@
-flask==3.0.0
+flask==3.0.3
+flask-cors==4.0.1
+requests==2.32.3
 python-dotenv==1.0.1
-requests==2.31.0
-flask-limiter==3.5.0
+chromadb==0.5.5
+redis==5.0.7

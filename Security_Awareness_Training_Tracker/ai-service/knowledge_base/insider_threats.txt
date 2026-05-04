@@ -1,0 +1,2 @@
+Insider threats come from internal users misusing access. 
+Monitor access and enforce strict policies.

@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
+load_dotenv()
 import os
 
 
@@ -9,6 +10,13 @@ from services.analysis_service import analyze_security_issue
 
 from datetime import datetime
 import json
+
+from services.embedding_service import load_model
+
+load_model()  
+
+from services.embedding_service import get_embedding
+
 
 import time
 import werkzeug.serving
@@ -40,8 +48,9 @@ def home():
     })
 
 # health check (important for project)
-@app.route("/health")
+@app.route("/health",methods=["GET"])
 def health():
+    return{"status":"ok"}
     uptime = time.time() - START_TIME
     avg_response_time = (
         TOTAL_RESPONSE_TIME / TOTAL_REQUESTS if TOTAL_REQUESTS > 0 else 0
@@ -70,12 +79,14 @@ def test_prompt():
 
 @app.route("/describe", methods=["POST"])
 def describe():
-    start = time.time()   # ✅ ADD
+    start = time.time()   
 
     data = request.json
 
     if not data or "text" not in data:
         return jsonify({"error": "Invalid input"}), 400
+
+    
 
     user_input = data["text"]
 
@@ -95,22 +106,24 @@ def describe():
     import json
     try:
         parsed = json.loads(ai_response)
-        response = jsonify(parsed)   # ✅ CHANGE
+        response = jsonify(parsed)  
     except:
-        response = jsonify({"raw": ai_response})   # ✅ CHANGE
+        response = jsonify({"raw": ai_response})   
 
-    end = time.time()   # ✅ ADD
+    end = time.time()   
+
+    print("Response Time:", end - start)
 
     global TOTAL_REQUESTS, TOTAL_RESPONSE_TIME
     TOTAL_REQUESTS += 1
     TOTAL_RESPONSE_TIME += (end - start)
 
-    return response   # ✅ FINAL
+    return response  
 
-    # ✅ Day 4: Recommendation endpoint (ADDED ONLY THIS)
+    
 @app.route("/recommend", methods=["POST"])
 def recommend():
-    start = time.time()   # ✅ ADD
+    start = time.time()   
 
     data = request.json
 
@@ -128,11 +141,11 @@ def recommend():
     import json
     try:
         parsed = json.loads(ai_response)
-        response = jsonify(parsed)   # ✅ CHANGE
+        response = jsonify(parsed)   
     except:
-        response = jsonify({"raw": ai_response})   # ✅ CHANGE
+        response = jsonify({"raw": ai_response})  
 
-    end = time.time()   # ✅ ADD
+    end = time.time()
 
     global TOTAL_REQUESTS, TOTAL_RESPONSE_TIME
     TOTAL_REQUESTS += 1
@@ -140,7 +153,7 @@ def recommend():
 
     return response
     
-    # ✅ Day 5: Service-based AI integration
+    
 @app.route("/analyze", methods=["POST"])
 def analyze():
     data = request.json
@@ -159,26 +172,39 @@ from services.analysis_service import generate_report
 
 @app.route("/generate-report", methods=["POST"])
 def generate_report_route():
-    start = time.time()   # ✅ 1. FIRST LINE inside function
+    start = time.time()
 
     data = request.json
 
-    if not data or "text" not in data:
+    if not data:
         return jsonify({"error": "Invalid input"}), 400
 
-    user_input = data["text"]
+    text = data.get("text", "").strip()
 
-    result = generate_report(user_input)
+    
+    if not text or len(text.strip()) < 10 or text.isalpha() and len(text.split()) <= 2:
+        return jsonify({
+            "is_fallback": True,
+            "title": "Invalid Input",
+            "summary": "Input is too weak or not meaningful",
+            "overview": "",
+            "key_items": [],
+            "recommendations": []
+        }), 400
 
-    response = jsonify(result)   # ✅ 2. BEFORE returning
+    result = generate_report(text)
 
-    end = time.time()   # ✅ 3. AFTER processing
+    response = jsonify(result)
+
+    end = time.time()
 
     global TOTAL_REQUESTS, TOTAL_RESPONSE_TIME
     TOTAL_REQUESTS += 1
     TOTAL_RESPONSE_TIME += (end - start)
 
-    return response   # ✅ FINAL return
+    print("🔥 NEW CODE RUNNING")
+    print(request.json)
+    return response 
 
 @app.after_request
 def add_security_headers(response):
@@ -209,6 +235,25 @@ def not_found(e):
         "message": "The requested resource was not found"
     })
     response.status_code = 404
+    return response
+
+@app.route("/metrics", methods=["GET"])
+def metrics():
+    avg = 0
+    if TOTAL_REQUESTS > 0:
+        avg = TOTAL_RESPONSE_TIME / TOTAL_REQUESTS
+
+    return jsonify({
+        "total_requests": TOTAL_REQUESTS,
+        "average_response_time": avg
+    })
+
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Content-Security-Policy'] = "default-src 'self'"
     return response
 
 if __name__ == "__main__":

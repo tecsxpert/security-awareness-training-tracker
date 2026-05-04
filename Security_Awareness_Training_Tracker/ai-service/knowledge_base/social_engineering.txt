@@ -1,0 +1,2 @@
+Social engineering manipulates users into revealing confidential data. 
+Always verify requests before sharing information.
