@@ -4,3 +4,4 @@ flask
 flask-limiter
 bleach
 requests
+flask-jwt-extended

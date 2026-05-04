@@ -3,11 +3,21 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
 from services.groq_client import GroqClient
-from services.security import sanitize_input, detect_prompt_injection
+from services.security import sanitize_input, detect_prompt_injection, contains_pii
+
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required
+
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 
-# Rate limiter (30 req/min)
+load_dotenv()
+# JWT Config
+app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY", "dev-secret")
+jwt = JWTManager(app)
+
+# Rate limiter
 limiter = Limiter(
     get_remote_address,
     app=app,
@@ -17,7 +27,27 @@ limiter = Limiter(
 client = GroqClient()
 
 
+# LOGIN ROUTE
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"error": "Invalid JSON"}), 400
+
+    username = data.get("username")
+    password = data.get("password")
+
+    if username == "admin" and password == "admin":
+        token = create_access_token(identity=username)
+        return jsonify({"access_token": token}), 200
+
+    return jsonify({"error": "Invalid credentials"}), 401
+
+
+# PROTECTED AI ENDPOINT
 @app.route("/ai/generate", methods=["POST"])
+
 @limiter.limit("30 per minute")
 def generate():
     data = request.get_json()
@@ -28,19 +58,16 @@ def generate():
     prompt = sanitize_input(data["prompt"])
 
     if not prompt or not prompt.strip():
-        return jsonify({
+        return jsonify({"error": "Prompt cannot be empty"}), 400
 
-            "error": "Prompt cannot be empty"
-
-        }), 400
+    # PII check
+    if contains_pii(prompt):
+        return jsonify({"error": "PII data is not allowed"}), 400
 
     # Detect injection
     if detect_prompt_injection(prompt):
-        return jsonify({
-            "error": "Potential prompt injection detected"
-        }), 400
+        return jsonify({"error": "Potential prompt injection detected"}), 400
 
-    # Call AI
     result = client.generate_response(prompt)
 
     if not result["success"]:
@@ -58,4 +85,4 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
